@@ -26,11 +26,11 @@ int main() {
 	for (int i = 0; i <= num; i++)
 		root.push_back(i);
 
-	int cmd, a, b;
+	int expr, a, b;
 	for (int i = 0; i < calc; i++) {
-		scanf("%d %d %d", &cmd, &a, &b);
+		scanf("%d %d %d", &expr, &a, &b);
 
-		if (cmd == 0) {
+		if (expr == 0) {
 			union_func(a, b);
 		}
 		else {
