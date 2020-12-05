@@ -1,33 +1,57 @@
-#include <string>
 #include <vector>
+#include <iostream>
 #include <algorithm>
 using namespace std;
 
-vector<int> solution(vector<int> arr, vector<vector<int>> commands) {
-	int tmp = commands.size();
-	int idx = 0;
-	vector<int> answer;
-	for (int i = 0; i < commands.size(); i++)
+int answer = 0;
+int N, M;
+int board[501][501];
+queue<pair<int, int>> q;
+int dx[4] = { 0,1,0,-1 };
+int dy[4] = { 1,0,-1,0 };
+
+void Input()
+{
+	cin >> N >> M;
+	for (int i = 0; i < N; i++)
 	{
-		vector<int>temp;
-		for (int j = commands[i][0] - 1; j < commands[i][1]; j++)
+		for (int j = 0; j < M; j++)
 		{
-			temp.push_back(arr[j]);
+			cin >> board[i][j];
 		}
-		sort(temp.begin(), temp.end());
-		answer.push_back(temp[commands[i][2] - 1]);
 	}
-	return answer;
 }
 
+void bfs(int y,int x)
+{
+	visit[y][x] = 1;
+	q.push(make_pair(y, x));
+	while (!q.empty())
+	{
+		int yy = q.front().first;
+		int xx = q.front().second;
+		if (yy == N - 1 && xx == M - 1) answer++;
+		q.pop();
+		for (int dir = 0; dir < 4; dir++)
+		{
+			int ny = yy + dy[dir];
+			int nx = xx + dx[dir];
+			
+			if (ny >= M || nx >= N | ny < 0 || nx < 0) continue;
+			if (visit[ny][nx] == 1) continue;
+			if (board[yy][xx] >= board[ny][nx]) continue;
+			visit[ny][nx] = 1;
+			q.push(make_pair(ny, nx));
+		}
+	}
+}
 
 int main()
 {
-	vector<int> arr = { 1, 5, 2, 6, 3, 7, 4 };
-	vector<vector<int>> commands = { {2, 5, 3},{4, 4, 1},{1, 7, 3} };
-	vector<int>answer;
-	answer = solution(arr, commands);
-	printf("%d %d %d", answer[0], answer[1], answer[2]);
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	Input();
+	bfs(0, 0);
+	cout << answer;
 }
-
-//[1, 5, 2, 6, 3, 7, 4]	[[2, 5, 3], [4, 4, 1], [1, 7, 3]]   [5, 6, 3]
