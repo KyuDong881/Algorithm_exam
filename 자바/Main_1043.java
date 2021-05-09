@@ -37,8 +37,7 @@ public class Main_1043 {
 			for(int j=0;j<total;j++) {
 				party[i].add(Integer.parseInt(st.nextToken()));
 			}
-			Collections.sort(party[i]);
-			
+
 			for(int j=0;j<total-1;j++) {
 				int h1 = party[i].get(j);
 				int h2 = party[i].get(j+1);
